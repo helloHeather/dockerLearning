@@ -19,7 +19,7 @@ public class HttpClientServiceUtil {
 	private final String USER_AGENT = "NotThatSpecial";
 	private String encoding = Base64.getEncoder().encodeToString(("admin:techX2018!").getBytes()); 
 	private String prismCentralIP = "10.21.74.39:9440";
-	private String apiPrefix = "/api/nutanix/v3/clusters/list";
+	private String apiPrefix = "/api/nutanix/v3";
 
  
 	public static void main(String[] args) throws Exception {
@@ -27,11 +27,11 @@ public class HttpClientServiceUtil {
 		HttpURLConnectionExample http = new HttpURLConnectionExample();
 
 		 // Sending get request
-		http.sendingGetRequest();
+		//http.sendingGetRequest();
 
 		// Sending post request
-		http.sendingPostRequest();
-
+		http.sendingPostRequest("/clusters/list");
+ 
 	 }
 	 
 	 // HTTP GET request
@@ -85,7 +85,7 @@ public class HttpClientServiceUtil {
 		/*String representation of JSON data ex:
 		postJsonData = "{"id":5,"countryName":"USA","population":8000}";
 		*/
-		
+
 		postJsonData = "{'kind':'cluster', 'sort_attribute':'ASCENDING'}"
 
 		// Send post request
