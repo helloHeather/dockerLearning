@@ -1,4 +1,3 @@
-package com.noththatspecial.util;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -7,24 +6,25 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
-import org.json.simple.JSONObject; //json-simple-1.1.1.jar
+//import org.json.simple.JSONObject; //json-simple-1.1.1.jar
 
 /*
 * Simple REST connectivity class
 */
 
 
-public class HttpClientServiceUtil {
+public class StartVM {
  
 	private final String USER_AGENT = "NotThatSpecial";
 	private String encoding = Base64.getEncoder().encodeToString(("admin:techX2018!").getBytes()); 
-	private String prismCentralIP = "10.21.74.39:9440";
+	private String prismCentralIP = "https://10.21.74.39:9440";
 	private String apiPrefix = "/api/nutanix/v3";
 
  
 	public static void main(String[] args) throws Exception {
+		System.out.println("welcome to StartVM");
 
-		HttpURLConnectionExample http = new HttpURLConnectionExample();
+		StartVM http = new StartVM();
 
 		 // Sending get request
 		//http.sendingGetRequest();
@@ -35,11 +35,11 @@ public class HttpClientServiceUtil {
 	 }
 	 
 	 // HTTP GET request
-	 public void sendingGetRequest(String urlString) throws Exception {
+	 public void sendingGetRequest(String url) throws Exception {
 	  
-		URL url = new URL(urlString);
+		URL obj = new URL(prismCentralIP + apiPrefix + url);
 
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 		// By default it is GET request
 		con.setRequestMethod("GET");
@@ -71,7 +71,9 @@ public class HttpClientServiceUtil {
 	 // HTTP Post request
 	 public void sendingPostRequest(String url) throws Exception {
 	 
-		URL obj = new URL(url);
+		URL obj = new URL(prismCentralIP + apiPrefix + url);
+
+		System.out.println("sendingPostRequest: " + obj.toString());
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 		    // Setting basic post request
@@ -86,7 +88,7 @@ public class HttpClientServiceUtil {
 		postJsonData = "{"id":5,"countryName":"USA","population":8000}";
 		*/
 
-		postJsonData = "{'kind':'cluster', 'sort_attribute':'ASCENDING'}"
+		postJsonData = "{'kind':'cluster', 'sort_attribute':'ASCENDING'}";
 
 		// Send post request
 		con.setDoOutput(true);
