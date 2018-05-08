@@ -23,3 +23,15 @@ $ docker ps -a
 
 --So to stop our Spring application container, we need to execute following command:
 $ docker rm -vf spring
+
+--login to Docker
+docker login --u notthatspecial -p <pwd here>
+
+--Check the image ID using
+docker images
+
+--and tag your image
+docker tag bb38976d03cf yourhubusername/verse_gapminder:firsttry
+
+--Push your image to the repository you created
+docker push yourhubusername/verse_gapminder
