@@ -1,7 +1,0 @@
-#startVMDockerfile
-
-FROM openjdk:8
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
-RUN javac StartVM.java
-CMD ["java", "StartVM"]
