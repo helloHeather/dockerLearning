@@ -30,7 +30,7 @@ public class StartVM {
 		//http.sendingGetRequest();
 
 		// Sending post request
-		http.sendingPostRequest("/clusters/list");
+		http.sendingPostRequest("/vms");
  
 	 }
 	 
@@ -83,23 +83,15 @@ public class StartVM {
 		con.setRequestProperty("Content-Type","application/json");
 		con.setRequestProperty  ("Authorization", "Basic " + encoding);
 
-		String postJsonData;
-		/*String representation of JSON data ex:
-		postJsonData = "{"id":5,"countryName":"USA","population":8000}";
-		*/
-
-		postJsonData = "{'kind':'cluster', 'sort_attribute':'ASCENDING'}";
-
 		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(postJsonData);
+		wr.writeBytes(createJSONObject());
 		wr.flush();
 		wr.close();
 
 		int responseCode = con.getResponseCode();
 		System.out.println("nSending 'POST' request to URL : " + url);
-		System.out.println("Post Data : " + postJsonData);
 		System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(
@@ -116,22 +108,13 @@ public class StartVM {
 		System.out.println(response.toString());
 	}
 
-	/* For reference
-	public createJSONObject() {
-		JSONObject obj = new JSONObject();
 
-		obj.put("name","foo");
-		obj.put("num",new Integer(100));
-		obj.put("balance",new Double(1000.21));
-		obj.put("is_vip",new Boolean(true));
+	public String createJSONObject() {
+		String jsonString = 
+			"'spec': {'cluster_reference': {'kind': 'cluster', 'name': 'POC074', 'uuid': '00056b91-2968-462b-0000-00000000e606'}, 'description': 'My VM', 'resources': {'vnuma_config': {'num_vnuma_nodes': 0 }, 'nic_list': [], 'num_vcpus_per_socket': 1, 'num_sockets': 1, 'gpu_list': [], 'memory_size_mib': 1024, 'power_state': 'ON', 'hardware_clock_timezone': 'UTC', 'power_state_mechanism': {'mechanism': 'HARD'}, 'vga_console_enabled': true, 'disk_list': [] }, 'name': 'Test VM'}, 'api_version': '3.1', 'metadata': {'last_update_time': '2018-05-08T15:22:14Z', 'kind': 'vm', 'name': 'My VM', 'project_reference': {'kind': 'project', 'name': 'default', 'uuid': '10a25e69-007a-48fd-860b-08fa09a98c41'}, 'creation_time': '2018-05-08T15:15:34Z', 'spec_version': 1, 'owner_reference': {'kind': 'user', 'uuid': '00000000-0000-0000-0000-000000000000', 'name': 'admin'}, 'categories': {}, 'uuid': 'e7432835-9f81-4b02-beed-e99220aa3638'} 'spec': {'cluster_reference': {'kind': 'cluster', 'name': 'POC074', 'uuid': '00056b91-2968-462b-0000-00000000e606'}, 'description': 'test-vm-clone', 'resources': {'vnuma_config': {'num_vnuma_nodes': 0 }, 'nic_list': [{'nic_type': 'NORMAL_NIC', 'subnet_reference': {'kind': 'subnet', 'name': 'Primary', 'uuid': 'db2b8daa-7fd7-462b-b249-904be4240106'} } ], 'num_vcpus_per_socket': 1, 'num_sockets': 2, 'gpu_list': [], 'memory_size_mib': 4096, 'power_state': 'OFF', 'hardware_clock_timezone': 'Asia/Calcutta', 'power_state_mechanism': {'mechanism': 'HARD'}, }, 'name': 'Test VM'}, 'api_version': '3.1', 'metadata': {'kind': 'vm', 'spec_version': 0, 'uuid': 'faabffba-8234-49d5-9759-c811e90dc71b', 'categories': {} }";
+	
+		return jsonString;
 
-		StringWriter out = new StringWriter();
-		obj.writeJSONString(out);
-
-		String jsonText = out.toString();
-		System.out.print(jsonText);
 	}
-	*/
-		
 
 }

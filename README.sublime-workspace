@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"enco",
+				"encodeToString"
+			],
+			[
+				"m",
+				"main\tmethod (main)"
+			],
+			[
 				"post",
 				"postJsonData"
 			],
@@ -23,14 +31,10 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 119.0,
-		"last_filter": "git: status",
+		"height": 269.0,
+		"last_filter": "push",
 		"selected_items":
 		[
-			[
-				"git: status",
-				"Git: Status"
-			],
 			[
 				"push",
 				"git: push"
@@ -40,12 +44,100 @@
 				"git: status"
 			],
 			[
+				"a",
+				"Git: Add..."
+			],
+			[
+				"git stat",
+				"git: status"
+			],
+			[
+				"java",
+				"Javatar: Builds..."
+			],
+			[
+				"build",
+				"Build With: JavaC"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"javac",
+				"Build With: JavaC"
+			],
+			[
+				"stat",
+				"git: status"
+			],
+			[
+				"st",
+				"git: status"
+			],
+			[
+				"commit",
+				"git: commit"
+			],
+			[
+				"comm",
+				"git: commit"
+			],
+			[
+				"sync",
+				"Set Syntax: C"
+			],
+			[
 				"add",
+				"Git: Add Current File"
+			],
+			[
+				"git: add",
+				"Git: Add All"
+			],
+			[
+				"s",
+				"Shell Exec: Open"
+			],
+			[
+				"shel",
+				"Shell Exec: Open"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"COMMIT",
+				"git: commit"
+			],
+			[
+				"ADD",
+				"Git: Add..."
+			],
+			[
+				"statu",
+				"git: status"
+			],
+			[
+				"ad",
 				"Git: Add..."
 			],
 			[
 				"git",
 				"git: status"
+			],
+			[
+				"git: status",
+				"Git: Status"
 			],
 			[
 				"syn",
@@ -108,10 +200,6 @@
 				"Package Control: List Packages"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
 				"git:b",
 				"Github: Repository"
 			],
@@ -120,19 +208,11 @@
 				"Package Control: Remove Repository"
 			],
 			[
-				"insta",
-				"Package Control: Install Package"
-			],
-			[
-				"ADD",
-				"Package Control: Add Repository"
-			],
-			[
 				"github",
 				"Github: Repository"
 			]
 		],
-		"width": 420.0
+		"width": 412.0
 	},
 	"console":
 	{
@@ -157,6 +237,8 @@
 	},
 	"file_history":
 	[
+		"/Users/summergoddess/Documents/GitHub/dockerLearning/COMMIT_EDITMSG.COMMIT_EDITMSG",
+		"/Users/summergoddess/Documents/GitHub/dockerLearning/Dockerfile",
 		"/Users/summergoddess/Documents/GitHub/BasicJava/HttpClientServiceUtility.java",
 		"/Users/summergoddess/Documents/GitHub/BasicJava/CallRESTService.java",
 		"/Users/summergoddess/Library/Application Support/Sublime Text 3/Packages/Git/Git.sublime-settings",
@@ -240,9 +322,17 @@
 	{
 		"height": 102.0
 	},
+	"output.exec":
+	{
+		"height": 102.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 102.0
 	},
 	"pinned_build_system": "",
 	"project": "README.sublime-project",
