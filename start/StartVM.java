@@ -2,6 +2,7 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
@@ -37,10 +38,10 @@ public class StartVM {
 		StartVM http = new StartVM();
 
 		 // Sending get request
-		http.sendingPostListRequest("/vms/list");
+		http.sendingPostListRequest("/vms");
 
 		// Sending post request
-		http.sendingPostRequest("/vms");
+		//http.sendingPostRequest("/vms");
  
 	 }
 	 
@@ -124,51 +125,46 @@ public class StartVM {
 
 	// HTTP Post request
 	 public void sendingPostListRequest(String url) throws Exception{
+
+	 	String urlString = prismCentralIP + apiPrefix + url;
+	 	System.out.println("urlString = " + urlString);
 	 
-		URL obj = new URL(prismCentralIP + apiPrefix + url);
+		URL obj = new URL(urlString);
 
 		setCert();
 
+		//String payload = "{\"kind\": \"vm\", \"sort_order\": \"ASCENDING\", \"offset\": 0, \"length\": 10, \"sort_attribute\": \"name\"}";
+
+		String payload = createJSONObject();
+
 		System.out.println("sendingPostRequest: " + obj.toString());
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-		    // Setting basic post request
-		con.setRequestMethod("POST");
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		con.setRequestProperty("Content-Type","application/json");
-		con.setRequestProperty  ("Authorization", "Basic " + encoding);
-
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes("{'kind': 'vm', 'sort_order': 'ASCENDING', 'offset': 0, 'length': 10, 'sort_attribute': 'name'}");
-		wr.flush();
-		wr.close();
-
-		int responseCode = con.getResponseCode();
-		System.out.println("nSending 'POST' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		      new InputStreamReader(con.getInputStream()));
-		String output;
-		StringBuffer response = new StringBuffer();
-
-		while ((output = in.readLine()) != null) {
-			response.append(output);
-		}
-		in.close();
-
+		HttpsURLConnection connection = (HttpsURLConnection) obj.openConnection();
+		connection.setDoInput(true);
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setRequestProperty("Authorization", "Basic " + encoding);
+        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+        writer.write(payload);
+        writer.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuffer jsonString = new StringBuffer();
+        String line;
+        while ((line = br.readLine()) != null) {
+                jsonString.append(line);
+        }
+        br.close();
+        connection.disconnect();
 		//printing result from response
-		System.out.println(response.toString());
+		System.out.println(jsonString);
 	}
 
 
 
 	private String createJSONObject() {
 		String jsonString = 
-			  "{'spec': {'cluster_reference': {'kind': 'cluster', 'name': 'POC074', 'uuid': '00056b91-2968-462b-0000-00000000e606'}, 'description': 'test-vm-nic', 'resources': {'vnuma_config': {'num_vnuma_nodes': 0 }, 'nic_list': [{'nic_type': 'NORMAL_NIC', 'subnet_reference': {'kind': 'subnet', 'name': 'Primary', 'uuid': 'db2b8daa-7fd7-462b-b249-904be4240106'} }], 'num_vcpus_per_socket': 1, 'num_sockets': 2, 'gpu_list': [], 'memory_size_mib': 4096, 'power_state': 'OFF', 'hardware_clock_timezone': 'Asia/Calcutta', 'power_state_mechanism': {'mechanism': 'HARD'}, 'vga_console_enabled': true }, 'name': 'Prateek Test VM'}, 'api_version': '3.1', 'metadata': {'kind': 'vm', 'last_update_time': '2018-05-08T15:22:14Z', 'spec_version': 0, 'creation_time': '2018-05-08T15:15:34Z', 'owner_reference': {'kind': 'user', 'uuid': '00000000-0000-0000-0000-000000000000', 'name': 'admin'} } }";
+			  "{\"spec\": {\"cluster_reference\": {\"kind\": \"cluster\", \"name\": \"POC074\", \"uuid\": \"00056b91-2968-462b-0000-00000000e606\"}, \"description\": \"test-vm-nic\", \"resources\": {\"vnuma_config\": {\"num_vnuma_nodes\": 0 }, \"nic_list\": [{\"nic_type\": \"NORMAL_NIC\", \"subnet_reference\": {\"kind\": \"subnet\", \"name\": \"Primary\", \"uuid\": \"db2b8daa-7fd7-462b-b249-904be4240106\"} }], \"num_vcpus_per_socket\": 1, \"num_sockets\": 2, \"gpu_list\": [], \"memory_size_mib\": 4096, \"power_state\": \"OFF\", \"hardware_clock_timezone\": \"Asia/Calcutta\", \"power_state_mechanism\": {\"mechanism\": \"HARD\"}, \"vga_console_enabled\": true }, \"name\": \"Prateek Test VM\"}, \"api_version\": \"3.1\", \"metadata\": {\"kind\": \"vm\", \"last_update_time\": \"2018-05-08T15:22:14Z\", \"spec_version\": 0, \"creation_time\": \"2018-05-08T15:15:34Z\", \"owner_reference\": {\"kind\": \"user\", \"uuid\": \"00000000-0000-0000-0000-000000000000\", \"name\": \"admin\"} } }";
 		return jsonString;
 
 	}
